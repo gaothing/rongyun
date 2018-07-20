@@ -32,13 +32,12 @@ i {
     background: #FFFFFF;
     padding: 0 0.3rem;
     .in {
-        width: 5.5rem;
+        width: 5.18rem;
         height: 0.72rem;
         border-radius: 0.72rem;
         background: #FFFFFF;
         box-shadow: 0 0.04rem 0.2rem #f0f0f0;
         float: left;
-        //      overflow: hidden;
         input {
             border: none;
             list-style: none;
@@ -54,26 +53,33 @@ i {
     }
     .emoticon,
     .add {
-        width: 0.56rem;
-        height: 0.56rem;
-        margin-top: 0.08rem;
+        width: 0.72rem;
+        height: 0.72rem;
+//      margin-top: 0.08rem;
         margin-left: 0.14rem;
         float: left;
         i {
-            font-size: 0.6rem;
+            margin-top: -0.04rem;
+            font-size: 0.7rem;
             color: #999;
         }
     }
     .senBtn {
-        width: 110rpx;
-        height: 0.72rem;
-        border-radius: 0.72rem;
+        position: absolute;
+        right: 0.3rem;
+        top: 0.08rem;
+        float: left;
+        width: 0.72rem;
+        height: 0.56rem;
+        line-height: 0.56rem;
+        border-radius: 0.2rem;
         background: #327ff1;
         text-align: center;
-        font-size: 0.3rem;
+        font-size: 0.24rem;
         color: #FFFFFF;
-        line-height: 0.72rem;
+
         display: none;
+        margin-top: 0.04rem;
     }
 }
 
@@ -150,16 +156,18 @@ i {
     //  overflow-x: hidden;
     //  overflow-y: scroll;
     .contentBox {
-        width: 6.9rem;
+        width: 100%;
+        padding:  0 0.3rem;
         height: 100%;
         overflow-x: hidden;
-        overflow-y: scroll;
-        margin: 0 auto;
-        overflow: hidden;
+        overflow-y:auto;
+//      margin: 0 auto;
+//      overflow: hidden;
         li {
             width: 100%;
             height: auto;
             margin-top: 0.48rem;
+            overflow: hidden;
             .avatar_side {
                 float: left;
                 width: 0.8rem;
@@ -187,12 +195,20 @@ i {
                     box-shadow: 0 0 0.2rem #F0F0F0;
                     font-size: 0.24rem;
                     color: #666;
+                    max-width: 4.9rem;
+                    img{
+                        max-width: 4rem;
+                    }
                     span {
                         width: 24px;
                         height: 24px;
                         display: inline-block;
                         margin-left: 0.1rem;
                     }
+                }
+                .img{
+                    background: transparent;
+                      box-shadow: 0 0 0.2rem transparent;
                 }
                 .audio {
                     margin-left: 0.2rem;
@@ -216,18 +232,20 @@ i {
                 float: right;
                 width: 4.9rem;
                 height: auto;
+                
                 .text,
                 .img {
                     float: right;
                     text-align: right;
                     margin-right: 0.2rem;
                     display: inline-block;
-                    background: #FFFFFF;
+                    background: #327FF1;
                     border-radius: 0.1rem;
                     padding: 0.2rem;
-                    box-shadow: 0 0 0.2rem #F0F0F0;
+                    box-shadow: 0 0 0.2rem #327FF1;
                     font-size: 0.24rem;
-                    color: #666;
+                    color: #FFFFFF;
+                    max-width: 4.9rem;
                     span {
                         width: 24px;
                         height: 24px;
@@ -235,19 +253,24 @@ i {
                         margin-right: 0.1rem;
                     }
                 }
+                 .img{
+                    background: transparent;
+                      box-shadow: 0 0 0.2rem transparent;
+                }
                 .audio {
                     float: right;
                     display: inline-block;
                     margin-right: 0.2rem;
                     height: 0.48rem;
-                    background: #FFFFFF;
+                    background: #327FF1;
                     border-radius: 0.1rem;
                     padding: 0.1rem;
                     box-sizing: content-box;
-                    box-shadow: 0 0 0.2rem #F0F0F0;
+                    box-shadow: 0 0 0.2rem #327FF1;
                     font-size: 0.24rem;
                     color: #666;
                     width: 1rem;
+                    color: #FFFFFF;
                     img {
                         width: 0.48rem;
                         float: left;
@@ -256,5 +279,22 @@ i {
                 }
             }
         }
+    }
+}
+//img view
+.viewImg{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,1);
+    display: none;
+    img{
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
     }
 }

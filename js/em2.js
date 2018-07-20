@@ -33,27 +33,27 @@
 	    var sixListHtml = [];
 	    var sevenListHtml = []
 	    oneList.forEach(function(v, i) {
-	    	oneListHtml.push("<li ><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
+	    	oneListHtml.push("<li con='"+v.symbol+"'><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
 	    })
 
 	    twoList.forEach(function(v, i) {
-	    	twoListHtml.push("<li ><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
+	    	twoListHtml.push("<li con='"+v.symbol+"'><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
 	    })
 	    threeList.forEach(function(v, i) {
-	    	threeListHtml.push("<li ><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
+	    	threeListHtml.push("<li con='"+v.symbol+"'><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
 	    })
 	    fourList.forEach(function(v, i) {
-	    	fourListHtml.push("<li ><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
+	    	fourListHtml.push("<li con='"+v.symbol+"'><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
 	    })
 	    fiveList.forEach(function(v, i) {
-	    	fiveListHtml.push("<li ><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
+	    	fiveListHtml.push("<li con='"+v.symbol+"'><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
 	    })
 	    sixList.forEach(function(v, i) {
 
-	    	sixListHtml.push("<li ><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
+	    	sixListHtml.push("<li con='"+v.symbol+"'><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
 	    })
 	    sevenList.forEach(function(v, i) {
-	    	sevenListHtml.push("<li ><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
+	    	sevenListHtml.push("<li con='"+v.symbol+"'><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
 	    })
 	    oneListHtml.push("<li><i>&#xe684;</i></li>")
 	    twoListHtml.push("<li><i>&#xe684;</i></li>")
@@ -82,7 +82,7 @@
 //发送信息底部点击
 var emFlag=true;
 var addFlag=true
-//点击表情
+//点击表情展开表情列表
 $(".emoticon").on("click",function(){
 	if(emFlag){
 //		var hright = document.documentElement.clientHeight - $("#sendMessageWrap").height()
@@ -101,10 +101,9 @@ $(".emoticon").on("click",function(){
 		addFlag=true
 	}
 })
-//点击添加
+//点击添加打开选择照片
 $(".add").on("click",function(){
 	if(addFlag){
-//		var hright = document.documentElement.clientHeight - $("#sendMessageWrap").height()
 		$("#sendMessageWrap").height("5.1rem");
 		$("#contentBox").height(document.documentElement.clientHeight - $("#sendMessageWrap").height())
 		$("#emoticonAll").css("display","none");
@@ -121,7 +120,7 @@ $(".add").on("click",function(){
 	}
 })
 		//获取url 参数
-		function getParam(name) {
+function getParam(name) {
 			var search = document.location.search;
 			var pattern = new RegExp("[?&]" + name + "\=([^&]+)", "g");
 			var matcher = pattern.exec(search);
@@ -139,7 +138,7 @@ $(".add").on("click",function(){
 			}
 			return items;
 		};
-//上传图片
+//打开相机上传图片
 $(".camera input").on("change",function(){
 	  var formData = new FormData();
 	  console.log(document.getElementById("file1"))
@@ -155,11 +154,32 @@ $(".camera input").on("change",function(){
                     processData: false,
                     success: function (data) {
                     	console.log(data)
-                sendImg(data.data.url)
+//              sendImg(data.data.url)
+                sendImg(data.data.url,"https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1476692208,2742622493&fm=5")
                     }
                 });
 })
-function  sendImg(url){
+//相册上传图片
+$(".photo input").on("change", function() {
+	    	var formData = new FormData();
+	    	formData.append("image", document.getElementById("file2").files[0]);
+	    	$.ajax({
+	    		url: "https://douboshiapi.xcuniv.com/api/essay/xcximage",
+	    		type: "POST",
+	    		data: formData,
+	    		beforeSend: function(request) {
+	    			var formData = new FormData();
+	    			request.setRequestHeader("token", getParam('token'));
+	    		},
+	    		contentType: false,
+	    		processData: false,
+	    		success: function(data) {
+	    			console.log(data)
+	    			sendImg(data.data.url, "https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1476692208,2742622493&fm=5")
+	    		}
+	    	});
+	    })
+function  sendImg(url,avatar){
 	  /*
      图片转为可以使用 HTML5 的 FileReader 或者 canvas 也可以上传到后台进行转换。
 
@@ -170,12 +190,15 @@ function  sendImg(url){
    */
  var base64Str = "base64 格式缩略图";
  var imageUri = url; // 上传到自己服务器的 URL。
- var msg = new RongIMLib.ImageMessage({content:base64Str,imageUri:imageUri});
+ var msg = new RongIMLib.ImageMessage({content:base64Str,imageUri:imageUri,avatar:avatar},avatar);
  var conversationtype = RongIMLib.ConversationType.PRIVATE; // 单聊,其他会话选择相应的消息类型即可。
  var targetId = "1"; // 目标 Id
  RongIMClient.getInstance().sendMessage(conversationtype, targetId, msg, {
                 onSuccess: function (message) {
                     //message 为发送的消息对象并且包含服务器返回的消息唯一Id和发送消息时间戳
+                    	var newHtml = '<li><div class="avatar_side avatar_self"><img  class="img" src="' + avatar + '" /></div><div class="msg_side msg_self"><div class="img"><img src="' + url + '"/></div></div></li>';
+				$(".contentBox").append(newHtml)
+				$(".contentBox").get(0).scrollTop =   $(".contentBox").get(0).scrollHeight;
                     console.log("Send successfully");
                 },
                 onError: function (errorCode,message) {
@@ -209,3 +232,8 @@ function  sendImg(url){
         );
 }
 
+//点击表情到输入框
+$(".emBox ").on("click","li",function(){
+	$("#tetxCon").val($("#tetxCon").val()+$(this).attr("con"));
+		$(".add").css("display","none").next().css("display","block")
+})

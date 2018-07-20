@@ -14,39 +14,13 @@
 		<div id="chatWrap">
 			<div id="contentBox">
 				<ul class="contentBox">
-					<li>
-						<!--<div class="avatar_side">
-							<img  class="img" src="https://pic4.zhimg.com/90/v2-505a5400e9bf7e1462c6137d2f2366d1_250x0.jpg"/>
-						</div>
-						<div class="msg_side">
-							<div class="text">你哈皮<span></span></div>
-							<div class="img">
-								<img src="https://pic4.zhimg.com/90/v2-505a5400e9bf7e1462c6137d2f2366d1_250x0.jpg"/>
-							</div>
-							<div class="audio">
-								<img src="img/audio.png" alt="" />
-							</div>
-						</div>-->
-						
-						<div class="avatar_side avatar_self">
-							<img  class="img" src="https://pic4.zhimg.com/90/v2-505a5400e9bf7e1462c6137d2f2366d1_250x0.jpg"/>
-						</div>
-						<div class="msg_side msg_self">
-							<!--<div class="text">你哈皮</div>-->
-							<!--<div class="img">
-								<img src="https://pic4.zhimg.com/90/v2-505a5400e9bf7e1462c6137d2f2366d1_250x0.jpg"/>
-							</div>-->
-							<div class="audio">
-								<img src="img/audio.png" alt="" />
-							</div>
-						</div>
-					</li>
+					
 				</ul>
 				
 			</div>
 			<div id="sendMessageWrap">
 				<div class="in">
-					<input type="" name="" id="" value="" />
+					<input type="" name="" id="tetxCon" value="" />
 				</div>
 				<div class="emoticon">
 					<i>&#xe64e;</i>
@@ -59,7 +33,7 @@
 					<li class="camera">
 						<input type="file" accept="image/*" capture="camera" name="" id="file1" value="" />
 						<i>&#xe617;</i></li>
-					<li class="photo" accept="image/*" > 
+					<li class=" camera photo" accept="image/*" > 
 						<input type="file" accept="image/*"  name="" id="file2" value="" />
 						<i class="po">&#xe60d;</i></li>
 				</ul>
@@ -78,12 +52,18 @@
 				</div>
 			</div>		
 		</div>
+				<div class="viewImg">
+			<img src="" alt="" />
+		</div>
 	</body>
 
 </html>
- <script src="https://cdn.ronghub.com/RongIMLib-2.3.2.min.js"></script>
-<script src="https://cdn.ronghub.com/RongEmoji-2.2.6.min.js"></script> 
+ <script src="http://cdn.ronghub.com/RongIMLib-2.3.2.min.js"></script>
+<script src="http://cdn.ronghub.com/RongEmoji-2.2.6.min.js"></script> 
 <script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/swiper-3.4.2.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/em2.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/index.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/new.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	$("#contentBox").height(document.documentElement.clientHeight - $("#sendMessageWrap").height())
+</script>
