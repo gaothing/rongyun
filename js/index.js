@@ -196,6 +196,30 @@ function sendText(msg) {
 		}
 	});
 }
+
+            function kk() {
+//              var that = this;
+                var conversationType = RongIMLib.ConversationType.PRIVATE //私聊,其他会话选择相应的消息类型即可。
+                 var   targetId = "2"; // 想获取自己和谁的历史消息，targetId 赋值为对方的 Id。
+                 var   timestrap = 0; // 默认传 null，若从头开始获取历史消息，请赋值为 0 ,timestrap = 0;
+                var    count = 10;  // 每次获取的历史消息条数，范围 0-20 条，可以多次获取。
+//              console.log(targetId)
+                RongIMLib.RongIMClient.getInstance().getHistoryMessages(conversationType, targetId, timestrap, count, {
+                    onSuccess: function(list, hasMsg) {
+                        // list => Message 数组。
+                        // hasMsg => 是否还有历史消息可以获取。
+                        console.log(list)
+                        console.log(hasMsg)
+       
+                    },
+                    onError: function(error) {
+                        console.log("GetHistoryMessages,errorcode:" + error);
+                    }
+                });
+            }
+            setTimeout(function(){
+	 kk() 
+},1000)
 //图片预览
 $(".contentBox").on("click","img",function(){
 	var src=$(this).attr("src")
