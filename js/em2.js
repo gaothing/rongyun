@@ -16,6 +16,7 @@
 	    		url: 'https://emojipedia-us.s3.amazonaws.com/thumbs/160/apple/96/thinking-face_1f914.png'
 	    	}
 	    };
+	    var targetId="d"
 	    RongIMLib.RongIMEmoji.init(config);
 	    var list = RongIMLib.RongIMEmoji.list;
 	    var oneList = list.slice(0, 20);
@@ -192,7 +193,6 @@ function  sendImg(url,avatar){
  var imageUri = url; // 上传到自己服务器的 URL。
  var msg = new RongIMLib.ImageMessage({content:base64Str,imageUri:imageUri,avatar:avatar},avatar);
  var conversationtype = RongIMLib.ConversationType.PRIVATE; // 单聊,其他会话选择相应的消息类型即可。
- var targetId = "1"; // 目标 Id
  RongIMClient.getInstance().sendMessage(conversationtype, targetId, msg, {
                 onSuccess: function (message) {
                     //message 为发送的消息对象并且包含服务器返回的消息唯一Id和发送消息时间戳

@@ -1,5 +1,6 @@
-RongIMClient.init("z3v5yqkbz1r60"); //这是初始化，需要填参数就是你的APPKEY。这个不难理解。
-var token = "dowSCv/CEsSvn9qbK3PSvLoDFrOxqoOsv5DxvuvOWIdpJfjaKqcnzcxoX0bAvGjOrDZBGv8FsRbiDxmIGzPJbQ=="; //注册时的token
+RongIMClient.init("kj7swf8o7ob42"); //这是初始化，需要填参数就是你的APPKEY。这个不难理解。
+var token = "qmNXHKMa7PIfID6ImHAqSl/6VTlV7ddnkHyghYrMJXTZMNMvM5uu4u79QSeT3IEdb5Bdhw+ijUc="; //注册时的token
+var targetId="d"
 //---------------------------
 RongIMClient.connect(token, {
 	onSuccess: function(userId) {
@@ -150,7 +151,7 @@ function sendText(msg) {
 	var msg = new RongIMLib.TextMessage(sendObj);
 	//或者使用RongIMLib.TextMessage.obtain 方法.具体使用请参见文档
 	var conversationtype = RongIMLib.ConversationType.PRIVATE; // 私聊
-	var targetId = "1"; // 目标 Id
+
 	RongIMClient.getInstance().sendMessage(conversationtype, targetId, msg, {
 		// 发送消息成功
 		onSuccess: function(message) {
@@ -198,3 +199,59 @@ $(".contentBox").on("click","img",function(){
 $(".viewImg").on("click",function(){
 	$(this).hide()
 })
+  function getIMTime(nS) {
+	return new Date(parseInt(nS)).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+}
+
+function kk() {
+	//              var that = this;
+	var conversationType = RongIMLib.ConversationType.PRIVATE //私聊,其他会话选择相应的消息类型即可。
+	var timestrap = 0; // 默认传 null，若从头开始获取历史消息，请赋值为 0 ,timestrap = 0;
+	var count = 5; // 每次获取的历史消息条数，范围 0-20 条，可以多次获取。
+	RongIMLib.RongIMClient.getInstance().getHistoryMessages(conversationType, targetId, timestrap, count, {
+		onSuccess: function(list, hasMsg) {
+			// list => Message 数组。
+			// hasMsg => 是否还有历史消息可以获取。
+			console.log(list,hasMsg)
+
+//			if(hasMsg) {
+				var historyHtml = []
+				var avatar = 'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1476692208,2742622493&fm=5';
+				for(var i = 0, j = list.length; i < j; i++) {
+					if(list[i].messageType == "TextMessage") {
+						var sentTime = getIMTime(list[i].sentTime),
+							content = RongIMLib.RongIMEmoji.symbolToHTML(list[i].content.content),
+							targetName = list[i].content.extra.name;
+						if(list[i].senderUserId != targetId) {
+							var newHtml = '<li><div class="avatar_side avatar_self"><img  class="img" src="' + avatar + '" /></div><div class="msg_side msg_self"><div class="text">' + content + '</div></div></li>';
+
+							historyHtml.push(newHtml)
+						} else {
+							var newHtml = '<li><div class="avatar_side "><img  class="img" src="' + avatar + '" /></div><div class="msg_side "><div class="text">' + content + '</div></div></li>';
+							
+							historyHtml.push(newHtml)
+						}
+					}else if(list[i].messageType == "ImageMessage"){
+						if(list[i].senderUserId != targetId) {
+							var newHtml = '<li><div class="avatar_side avatar_self"><img  class="img" src="' + avatar + '" /></div><div class="msg_side msg_self"><div class="img"><img src="' +list[i].content.imageUri + '"/></div></div></li>';
+
+							historyHtml.push(newHtml)
+						} else {
+							var newHtml = '<li><div class="avatar_side "><img  class="img" src="' + avatar + '" /></div><div class="msg_side "><div class="img"><img src="' + list[i].content.imageUri + '"/></div></div></li>';
+							
+							historyHtml.push(newHtml)
+						}
+					}
+				}
+
+				$(".contentBox").append(historyHtml.join("")).get(0).scrollTop = $(".contentBox").get(0).scrollHeight;
+//			}
+		},
+		onError: function(error) {
+			console.log("GetHistoryMessages,errorcode:" + error);
+		}
+	});
+}
+setTimeout(function() {
+	kk()
+}, 1000)
