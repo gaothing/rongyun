@@ -95,6 +95,7 @@
 <script src="js/index.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
 	$("img").on("click",function(){
+		event.preventDefault();
 		return false
 	})
 	$("#contentBox").height(document.documentElement.clientHeight - $("#sendMessageWrap").height())
