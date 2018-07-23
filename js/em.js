@@ -16,7 +16,7 @@
 	    		url: 'https://emojipedia-us.s3.amazonaws.com/thumbs/160/apple/96/thinking-face_1f914.png'
 	    	}
 	    };
-var targetId="a"
+var targetId="1"
 	    RongIMLib.RongIMEmoji.init(config);
 	    var list = RongIMLib.RongIMEmoji.list;
 	    var oneList = list.slice(0, 20);

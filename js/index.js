@@ -1,6 +1,6 @@
-RongIMClient.init("kj7swf8o7ob42"); //这是初始化，需要填参数就是你的APPKEY。这个不难理解。
-var token = "aklJMY/lnGLbCkQD34tT6F/6VTlV7ddnkHyghYrMJXQH1bKBLlDIVeejMvt3eCqC/vg3gO4kapI="; //注册时的token
-var targetId="a"
+RongIMClient.init("z3v5yqkbz1xj0"); //这是初始化，需要填参数就是你的APPKEY。这个不难理解。
+var token = "zdy69RIJfKYG2wJ82B+13QXGQhGIJiX4RCueQq8ljG0EPoX0pZUXnGIZ1MLDWSZ8uNYTbLWVvDebRKuUa+4Pqg=="; //注册时的token
+var targetId="1"
 //---------------------------
 RongIMClient.connect(token, {
 	onSuccess: function(userId) {
@@ -70,16 +70,15 @@ RongIMClient.setOnReceiveMessageListener({
 		switch(message.messageType) {
 			case RongIMClient.MessageType.TextMessage:
 				console.log(message)
-				console.log(message.content.content);
+
 				var content = RongIMLib.RongIMEmoji.symbolToHTML(message.content.content)
-				console.log(content)
 				var newHtml = '<li><div class="avatar_side"><img  class="img" src="' + message.content.extra.avatar + '" /></div><div class="msg_side"><div class="text">' + content + '</div></div></li>';
 				$(".contentBox").append(newHtml)
 				$(".contentBox").get(0).scrollTop = $(".contentBox").get(0).scrollHeight;
 				//发送的消息内容将会被打印
 				break;
 			case RongIMClient.MessageType.ImageMessage:
-				console.log(message);
+
 				var newHtml = '<li><div class="avatar_side"><img  class="img" src="' + message.content.content.avatar + '" /></div><div class="msg_side"><div class="img"><img src="' + message.content.imageUri + '"/></div></div></li>';
 				$(".contentBox").append(newHtml)
 				$(".contentBox").get(0).scrollTop = $(".contentBox").get(0).scrollHeight;
@@ -135,7 +134,7 @@ $("#tetxCon").on("input", function() {
 		$(".senBtn").css("display", "none")
 	}
 })
-$("#tetxCon").on("change",function(){
+$("#tetxCon").on("focus",function(){
 		$("#emoticonAll").css("display", "none");
 	    $("#upBox").css("display", "none")
 })
