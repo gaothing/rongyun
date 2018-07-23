@@ -277,7 +277,7 @@ function kk() {
 						content = RongIMLib.RongIMEmoji.symbolToHTML(list[i].content.content),
 						targetName = list[i].content.extra.name;
 					if(list[i].senderUserId != targetId) {
-						var newHtml = '<li><div class="avatar_side avatar_self"><img  class="img" src="' + avatar + '" /></div><div class="msg_side msg_self"><div class="text">' + content + '</div></div></li>';
+						var newHtml = '<li><div class="avatar_side avatar_self"><img  class="img" onclick="return false" src="' + avatar + '" /></div><div class="msg_side msg_self"><div class="text">' + content + '</div></div></li>';
 
 						historyHtml.push(newHtml)
 					} else {
