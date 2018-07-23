@@ -311,9 +311,10 @@ setTimeout(function() {
 }, 1000)
 //图片预览
 $(".contentBox").on("click", "img", function() {
+//	event.preventDefault();
 	var src = $(this).attr("src")
 	$(".viewImg").css("display", "block").find("img").attr("src", src)
 })
 $(".viewImg").on("click", function() {
-	$(this).hide()
+	$(this).css("display","none")
 })
