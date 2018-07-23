@@ -1,6 +1,8 @@
 RongIMClient.init("z3v5yqkbz1xj0"); //这是初始化，需要填参数就是你的APPKEY。这个不难理解。
 var token = "zdy69RIJfKYG2wJ82B+13QXGQhGIJiX4RCueQq8ljG0EPoX0pZUXnGIZ1MLDWSZ8uNYTbLWVvDebRKuUa+4Pqg=="; //注册时的token
-var targetId = "1"
+var targetId = "1";
+//设置一个静态头像
+var avatarUrl="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532342327029&di=b476dd61ffacd37856220a50b4294325&imgtype=0&src=http%3A%2F%2Fs7.sinaimg.cn%2Fmw690%2F006DJjX1zy7aD96xYY676%26690"
 RongIMLib.RongIMVoice.init();
 //---------------------------
 RongIMClient.connect(token, {
@@ -74,14 +76,14 @@ RongIMClient.setOnReceiveMessageListener({
 				console.log(message)
 				var initCon = RongIMLib.RongIMEmoji.emojiToSymbol(message.content.content);
 				var content = RongIMLib.RongIMEmoji.symbolToHTML(initCon)
-				var newHtml = '<li><div class="avatar_side"><img  class="img" src="' + "" + '" /></div><div class="msg_side"><div class="text">' + content + '</div></div></li>';
+				var newHtml = '<li><div class="avatar_side"><img  class="img" src="' + avatarUrl + '" /></div><div class="msg_side"><div class="text">' + content + '</div></div></li>';
 				$(".contentBox").append(newHtml)
 				$(".contentBox").get(0).scrollTop = $(".contentBox").get(0).scrollHeight;
 				//发送的消息内容将会被打印
 				break;
 			case RongIMClient.MessageType.ImageMessage:
 
-				var newHtml = '<li><div class="avatar_side"><img  class="img" src="' + message.content.content.avatar + '" /></div><div class="msg_side"><div class="img"><img src="' + message.content.imageUri + '"/></div></div></li>';
+				var newHtml = '<li><div class="avatar_side"><img  class="img" src="' +avatarUrl + '" /></div><div class="msg_side"><div class="img"><img src="' + message.content.imageUri + '"/></div></div></li>';
 				$(".contentBox").append(newHtml)
 				$(".contentBox").get(0).scrollTop = $(".contentBox").get(0).scrollHeight;
 				// do something...
@@ -95,7 +97,7 @@ RongIMClient.setOnReceiveMessageListener({
 					// 播放声音
 //					RongIMLib.RongIMVoice.play(audioFile, duration);
 //				});
-					var newHtml = '<li><div class="avatar_side"><img  class="img" src="' + "" + '" /></div><div class="msg_side"><div class="audio" state="true"  aud='+audioFile+' dur='+duration+' style="width:'+(1+duration*0.04)+'rem;max-width:4rem"><img src="img/audio.png" /></div><div class="dur dur1">'+duration+ '”</div></div></li>';
+					var newHtml = '<li><div class="avatar_side"><img  class="img" src="' + avatarUrl + '" /></div><div class="msg_side"><div class="audio" state="true"  aud='+audioFile+' dur='+duration+' style="width:'+(1+duration*0.04)+'rem;max-width:4rem"><img src="img/audio.png" /></div><div class="dur dur1">'+duration+ '”</div></div></li>';
 				$(".contentBox").append(newHtml)
 				$(".contentBox").get(0).scrollTop = $(".contentBox").get(0).scrollHeight;
 				break;
@@ -130,7 +132,7 @@ RongIMClient.setOnReceiveMessageListener({
 				// do something...
 
 				var content = RongIMLib.RongIMEmoji.symbolToHTML(message.content.content.bqmmContent)
-				var newHtml = '<li><div class="avatar_side"><img  class="img" src="' + message.content.extra.avatar + '" /></div><div class="msg_side"><div class="text">' + content + '</div></div></li>';
+				var newHtml = '<li><div class="avatar_side"><img  class="img" src="' +avatarUrl + '" /></div><div class="msg_side"><div class="text">' + content + '</div></div></li>';
 				$(".contentBox").append(newHtml)
 				$(".contentBox").get(0).scrollTop = $(".contentBox").get(0).scrollHeight;
 				break;
@@ -163,7 +165,17 @@ $(".contentBox").on("click",".audio",function(){
 
 })
 //监听输入框输入
+var inputLen=0;
 $("#tetxCon").on("input", function() {
+	var newInputLen=$(this).val().length;
+	if(newInputLen>inputLen){
+		console.log("add",$("#tetxCon2").val()+$(this).val().substr($(this).val().length-1))
+	$("#tetxCon2").val($("#tetxCon2").val()+$(this).val().substr($(this).val().length-1))
+	}else{
+		console.log("reduce",$("#tetxCon2").val().substr(0,$("#tetxCon2").val().length-1))
+		$("#tetxCon2").val($("#tetxCon2").val().substr(0,$("#tetxCon2").val().length-1))
+	}
+	inputLen=newInputLen
 	if($(this).val()) {
 		$(".add").css("display", "none")
 		$(".senBtn").css("display", "block")
@@ -172,53 +184,59 @@ $("#tetxCon").on("input", function() {
 		$(".senBtn").css("display", "none")
 	}
 })
+
 //输入框获取焦点时,表情和上传图片隐藏
 $("#tetxCon").on("focus", function() {
-	$("#sendMessageWrap").height("1.1rem")
+	$("#sendMessageWrap").height("1.1rem");
+	$("#contentBox").height(document.documentElement.clientHeight - $("#sendMessageWrap").height())
 	$("#emoticonAll").css("display", "none");
 	$("#upBox").css("display", "none")
 })
+//点击表情中删除
 $(".emBox").on("click", "i", function() {
-	console.log("//")
 	var value = $("#tetxCon").val()
 	var last = value.lastIndexOf(']')
 	var first = value.lastIndexOf("[")
 	console.log(last, first)
 	if(last == value.length - 1 && first > -1) {
 		var val = value.substr(0, first)
+	}else{
+		var val=value.substr(0,value.length-1)
 	}
 	console.log(value)
 	console.log(val)
+	$("#tetxCon").val(val)
 })
 //点击发送(文本与表情)
 $(".senBtn").on("click", function() {
-	sendText($("#tetxCon2").val())
-	$("#tetxCon").val("")
+	sendText($("#tetxCon2").val(),$("#tetxCon").val())
+	$("#tetxCon").val("");
+	$("#tetxCon2").val("");
 	$(".add").css("display", "block")
 	$(".senBtn").css("display", "none")
 	$(".contentBox").get(0).scrollTop = $(".contentBox").get(0).scrollHeight;
 })
 //发送文本消息
-function sendText(msg) {
+function sendText(addMsg,msg) {
+	console.log(addMsg,msg)
 	//-------------------------------------
 	// 定义消息类型,文字消息使用 RongIMLib.TextMessage
-
 	//或者使用RongIMLib.TextMessage.obtain 方法.具体使用请参见文档
 	var sendObj = {
-		content: msg,
+		content: addMsg,
 		extra: {
 			avatar: "https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=3761083504,3769519560&fm=5"
 		}
 	}
-	var msg = new RongIMLib.TextMessage(sendObj);
+	var sendMsg = new RongIMLib.TextMessage(sendObj);
 	var conversationtype = RongIMLib.ConversationType.PRIVATE; // 私聊
-
-	RongIMClient.getInstance().sendMessage(conversationtype, targetId, msg, {
+	RongIMClient.getInstance().sendMessage(conversationtype, targetId, sendMsg, {
 		// 发送消息成功
 		onSuccess: function(message) {
-			var content = RongIMLib.RongIMEmoji.symbolToHTML(sendObj.content)
+			var content = RongIMLib.RongIMEmoji.symbolToHTML(msg)
 			//message 为发送的消息对象并且包含服务器返回的消息唯一Id和发送消息时间戳
-			var newHtml = '<li><div class="avatar_side avatar_self"><img  class="img" src="' + sendObj.extra.avatar + '" /></div><div class="msg_side msg_self"><div class="text">' + content + '</div></div></li>';
+
+			var newHtml = '<li><div class="avatar_side avatar_self"><img  class="img" src="' +avatarUrl+ '" /></div><div class="msg_side msg_self"><div class="text">' + content + '</div></div></li>';
 			$(".contentBox").append(newHtml).get(0).scrollTop = $(".contentBox").get(0).scrollHeight;
 			console.log("Send successfully");
 
@@ -277,21 +295,21 @@ function kk() {
 						content = RongIMLib.RongIMEmoji.symbolToHTML(list[i].content.content),
 						targetName = list[i].content.extra.name;
 					if(list[i].senderUserId != targetId) {
-						var newHtml = '<li><div class="avatar_side avatar_self"><img  class="img" onclick="return false" src="' + avatar + '" /></div><div class="msg_side msg_self"><div class="text">' + content + '</div></div></li>';
+						var newHtml = '<li><div class="avatar_side avatar_self"><img  class="img" onclick="return false" src="' + avatarUrl+ '" /></div><div class="msg_side msg_self"><div class="text">' + content + '</div></div></li>';
 
 						historyHtml.push(newHtml)
 					} else {
-						var newHtml = '<li><div class="avatar_side "><img  class="img" src="' + avatar + '" /></div><div class="msg_side "><div class="text">' + content + '</div></div></li>';
+						var newHtml = '<li><div class="avatar_side "><img  class="img" src="' + avatarUrl + '" /></div><div class="msg_side "><div class="text">' + content + '</div></div></li>';
 
 						historyHtml.push(newHtml)
 					}
 				} else if(list[i].messageType == "ImageMessage") {
 					if(list[i].senderUserId != targetId) {
-						var newHtml = '<li><div class="avatar_side avatar_self"><img  class="img" src="' + avatar + '" /></div><div class="msg_side msg_self"><div class="img"><img src="' + list[i].content.imageUri + '"/></div></div></li>';
+						var newHtml = '<li><div class="avatar_side avatar_self"><img  class="img" src="' + avatarUrl + '" /></div><div class="msg_side msg_self"><div class="img"><img src="' + list[i].content.imageUri + '"/></div></div></li>';
 
 						historyHtml.push(newHtml)
 					} else {
-						var newHtml = '<li><div class="avatar_side "><img  class="img" src="' + avatar + '" /></div><div class="msg_side "><div class="img"><img src="' + list[i].content.imageUri + '"/></div></div></li>';
+						var newHtml = '<li><div class="avatar_side "><img  class="img" src="' + avatarUrl + '" /></div><div class="msg_side "><div class="img"><img src="' + list[i].content.imageUri + '"/></div></div></li>';
 
 						historyHtml.push(newHtml)
 					}
@@ -311,7 +329,6 @@ setTimeout(function() {
 }, 1000)
 //图片预览
 $(".contentBox").on("click", "img", function() {
-//	event.preventDefault();
 	var src = $(this).attr("src")
 	$(".viewImg").css("display", "block").find("img").attr("src", src)
 })

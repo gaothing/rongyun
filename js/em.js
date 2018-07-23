@@ -16,7 +16,7 @@
 	    		url: 'https://emojipedia-us.s3.amazonaws.com/thumbs/160/apple/96/thinking-face_1f914.png'
 	    	}
 	    };
-var targetId="1"
+		var targetId="1"
 	    RongIMLib.RongIMEmoji.init(config);
 	    var list = RongIMLib.RongIMEmoji.list;
 	    var oneList = list.slice(0, 20);
@@ -33,7 +33,6 @@ var targetId="1"
 	    var fiveListHtml = [];
 	    var sixListHtml = [];
 	    var sevenListHtml = []
-	    console.log(oneList)
 	    oneList.forEach(function(v, i) {
 	    	oneListHtml.push("<li  con='" + v.symbol + "'  em='"+v.emoji+"'><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
 	    })
@@ -178,7 +177,28 @@ var targetId="1"
 	    		}
 	    	});
 	    })
-
+      function getBase64(img){
+        function getBase64Image(img,width,height) {//width、height调用时传入具体像素值，控制大小 ,不传则默认图像大小
+          var canvas = document.createElement("canvas");
+          canvas.width = width ? width : img.width;
+          canvas.height = height ? height : img.height;
+ 
+          var ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          var dataURL = canvas.toDataURL();
+          return dataURL;
+        }
+        var image = new Image();
+        image.crossOrigin = '';
+        image.src = img;
+        var deferred=$.Deferred();
+        if(img){
+          image.onload =function (){
+            deferred.resolve(getBase64Image(image));//将base64传给done上传处理
+          }
+          return deferred.promise();//问题要让onload完成后再return sessionStorage['imgTest']
+        }
+      }
 function sendImg(url, avatar) {
 	    	/*
      图片转为可以使用 HTML5 的 FileReader 或者 canvas 也可以上传到后台进行转换。
@@ -188,21 +208,18 @@ function sendImg(url, avatar) {
          2、不带前缀。
          3、大小建议不超过 30。
    */
-	    	var base64Str = "base64 格式缩略图";
+	    	var base64Str = getBase64(url);
 	    	var imageUri = url; // 上传到自己服务器的 URL。
 	    	var msg = new RongIMLib.ImageMessage({
 	    		content: base64Str,
 	    		imageUri: imageUri,
-	    		avatar: avatar
-	    	}, avatar);
+	    	});
 	    	var conversationtype = RongIMLib.ConversationType.PRIVATE; // 单聊,其他会话选择相应的消息类型即可。
-	    	var extra = avatar
 	    	RongIMClient.getInstance().sendMessage(conversationtype, targetId, msg, {
 	    		onSuccess: function(message) {
 	    			//message 为发送的消息对象并且包含服务器返回的消息唯一Id和发送消息时间戳
-	    			var newHtml = '<li><div class="avatar_side avatar_self"><img  class="img" src="' + avatar + '" /></div><div class="msg_side msg_self"><div class="img"><img src="' + url + '"/></div></div></li>';
+	    			var newHtml = '<li><div class="avatar_side avatar_self"><img  class="img" src="' + avatarUrl + '" /></div><div class="msg_side msg_self"><div class="img"><img src="' + url + '"/></div></div></li>';
 	    			$(".contentBox").append(newHtml).get(0).scrollTop = $(".contentBox").get(0).scrollHeight;
-
 	    			console.log("Send successfully");
 	    		},
 	    		onError: function(errorCode, message) {
@@ -238,7 +255,9 @@ function sendImg(url, avatar) {
 	    //-------------------------------------------------------------------------------
 //	    点击表情到输入框
 	    $(".emBox ").on("click", "li", function() {
-	    	$("#tetxCon2").val($("#tetxCon2").val() + $(this).attr("em"))
+	    	if( $(this).attr("em")){
+	    	$("#tetxCon2").val($("#tetxCon2").val() + $(this).attr("em"));
 	    	$("#tetxCon").val($("#tetxCon").val() + $(this).attr("con"));
 	    	$(".add").css("display", "none").next().css("display", "block")
+	    	}
 	    })
