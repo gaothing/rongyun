@@ -135,6 +135,10 @@ $("#tetxCon").on("input", function() {
 		$(".senBtn").css("display", "none")
 	}
 })
+$("#tetxCon").on("change",function(){
+		$("#emoticonAll").css("display", "none");
+	    $("#upBox").css("display", "none")
+})
 //点击发送(文本与表情)
 $(".senBtn").on("click", function() {
 	sendText($("#tetxCon").val())
