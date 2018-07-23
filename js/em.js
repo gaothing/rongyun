@@ -253,11 +253,3 @@ function sendImg(url, avatar) {
 	    }
 
 	    //-------------------------------------------------------------------------------
-//	    点击表情到输入框
-	    $(".emBox ").on("click", "li", function() {
-	    	if( $(this).attr("em")){
-	    	$("#tetxCon2").val($("#tetxCon2").val() + $(this).attr("em"));
-	    	$("#tetxCon").val($("#tetxCon").val() + $(this).attr("con"));
-	    	$(".add").css("display", "none").next().css("display", "block")
-	    	}
-	    })

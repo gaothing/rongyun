@@ -83,7 +83,7 @@ RongIMClient.setOnReceiveMessageListener({
 				break;
 			case RongIMClient.MessageType.ImageMessage:
 
-				var newHtml = '<li><div class="avatar_side"><img  class="img" src="' +avatarUrl + '" /></div><div class="msg_side"><div class="img"><img src="' + message.content.imageUri + '"/></div></div></li>';
+				var newHtml = '<li><div class="avatar_side"><img  class="img" src="' +avatarUrl + '" /></div><div class="msg_side"><div class="img"><img class="msgImg" src="' + message.content.imageUri + '"/></div></div></li>';
 				$(".contentBox").append(newHtml)
 				$(".contentBox").get(0).scrollTop = $(".contentBox").get(0).scrollHeight;
 				// do something...
@@ -97,7 +97,7 @@ RongIMClient.setOnReceiveMessageListener({
 					// 播放声音
 //					RongIMLib.RongIMVoice.play(audioFile, duration);
 //				});
-					var newHtml = '<li><div class="avatar_side"><img  class="img" src="' + avatarUrl + '" /></div><div class="msg_side"><div class="audio" state="true"  aud='+audioFile+' dur='+duration+' style="width:'+(1+duration*0.04)+'rem;max-width:4rem"><img src="img/audio.png" /></div><div class="dur dur1">'+duration+ '”</div></div></li>';
+					var newHtml = '<li><div class="avatar_side"><img  class="img" src="' + avatarUrl + '" /></div><div class="msg_side"><div class="audio" state="true"  aud='+audioFile+' dur='+duration+' style="width:'+(1+duration*0.04)+'rem;max-width:4rem"><img src="img/audio.png" onclick="return false" /></div><div class="dur dur1">'+duration+ '”</div></div></li>';
 				$(".contentBox").append(newHtml)
 				$(".contentBox").get(0).scrollTop = $(".contentBox").get(0).scrollHeight;
 				break;
@@ -195,17 +195,24 @@ $("#tetxCon").on("focus", function() {
 //点击表情中删除
 $(".emBox").on("click", "i", function() {
 	var value = $("#tetxCon").val()
-	var last = value.lastIndexOf(']')
-	var first = value.lastIndexOf("[")
-	console.log(last, first)
-	if(last == value.length - 1 && first > -1) {
-		var val = value.substr(0, first)
-	}else{
+//	var last = value.lastIndexOf(']')
+//	var first = value.lastIndexOf("[")
+//	console.log(last, first)
+//	if(last == value.length - 1 && first > -1) {
+//		var val = value.substr(0, first)
+//	}else{
 		var val=value.substr(0,value.length-1)
-	}
-	console.log(value)
-	console.log(val)
+//	}
+//	console.log(value)
+//	console.log(val)
 	$("#tetxCon").val(val)
+})
+//-------------------------------------------------------------------------------
+//	    点击表情发送
+$(".emBox ").on("click", "li", function() {
+	if($(this).attr("con")){
+	sendText( $(this).attr("em"),$(this).attr("con"))
+	}
 })
 //点击发送(文本与表情)
 $(".senBtn").on("click", function() {
@@ -305,11 +312,11 @@ function kk() {
 					}
 				} else if(list[i].messageType == "ImageMessage") {
 					if(list[i].senderUserId != targetId) {
-						var newHtml = '<li><div class="avatar_side avatar_self"><img  class="img" src="' + avatarUrl + '" /></div><div class="msg_side msg_self"><div class="img"><img src="' + list[i].content.imageUri + '"/></div></div></li>';
+						var newHtml = '<li><div class="avatar_side avatar_self"><img  class="img" src="' + avatarUrl + '" /></div><div class="msg_side msg_self"><div class="img"><img class="msgImg" src="' + list[i].content.imageUri + '"/></div></div></li>';
 
 						historyHtml.push(newHtml)
 					} else {
-						var newHtml = '<li><div class="avatar_side "><img  class="img" src="' + avatarUrl + '" /></div><div class="msg_side "><div class="img"><img src="' + list[i].content.imageUri + '"/></div></div></li>';
+						var newHtml = '<li><div class="avatar_side "><img  class="img" src="' + avatarUrl + '" /></div><div class="msg_side "><div class="img"><img class="msgImg" src="' + list[i].content.imageUri + '"/></div></div></li>';
 
 						historyHtml.push(newHtml)
 					}
@@ -328,7 +335,7 @@ setTimeout(function() {
 	kk()
 }, 1000)
 //图片预览
-$(".contentBox").on("click", "img", function() {
+$(".contentBox").on("click", ".msgImg", function() {
 	var src = $(this).attr("src")
 	$(".viewImg").css("display", "block").find("img").attr("src", src)
 })
