@@ -91,10 +91,10 @@ RongIMClient.setOnReceiveMessageListener({
 				// 音频文件长度   
 				var duration = message.content.duration
 				// 预加载
-				RongIMLib.RongIMVoice.preLoaded(audioFile, function() {
+//				RongIMLib.RongIMVoice.preLoaded(audioFile, function() {
 					// 播放声音
 //					RongIMLib.RongIMVoice.play(audioFile, duration);
-				});
+//				});
 					var newHtml = '<li><div class="avatar_side"><img  class="img" src="' + "" + '" /></div><div class="msg_side"><div class="audio" state="true"  aud='+audioFile+' dur='+duration+' style="width:'+(1+duration*0.04)+'rem;max-width:4rem"><img src="img/audio.png" /></div><div class="dur dur1">'+duration+ '”</div></div></li>';
 				$(".contentBox").append(newHtml)
 				$(".contentBox").get(0).scrollTop = $(".contentBox").get(0).scrollHeight;
@@ -147,7 +147,10 @@ $(".contentBox").on("click",".audio",function(){
 	var state=$(this).attr("state");
 	var self=$(this)
 	if(state){
-			RongIMLib.RongIMVoice.play(audioFile, duration);
+			RongIMLib.RongIMVoice.preLoaded(audioFile, function(){
+    // 播放声音
+    RongIMLib.RongIMVoice.play(audioFile, duration);
+});
 			self.next().removeClass("dur1")
 			$(this).attr("state",false)
 			setTimeout(function(){
