@@ -33,28 +33,29 @@ var targetId="1"
 	    var fiveListHtml = [];
 	    var sixListHtml = [];
 	    var sevenListHtml = []
+	    console.log(oneList)
 	    oneList.forEach(function(v, i) {
-	    	oneListHtml.push("<li  con='" + v.symbol + "' ><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
+	    	oneListHtml.push("<li  con='" + v.symbol + "'  em='"+v.emoji+"'><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
 	    })
 
 	    twoList.forEach(function(v, i) {
-	    	twoListHtml.push("<li con='" + v.symbol + "'  ><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
+	    	twoListHtml.push("<li con='" + v.symbol + "' em='"+v.emoji+"' ><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
 	    })
 	    threeList.forEach(function(v, i) {
-	    	threeListHtml.push("<li  con='" + v.symbol + "' ><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
+	    	threeListHtml.push("<li  con='" + v.symbol + "' em='"+v.emoji+"' ><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
 	    })
 	    fourList.forEach(function(v, i) {
-	    	fourListHtml.push("<li con='" + v.symbol + "' ><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
+	    	fourListHtml.push("<li con='" + v.symbol + "' em='"+v.emoji+"' ><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
 	    })
 	    fiveList.forEach(function(v, i) {
-	    	fiveListHtml.push("<li con='" + v.symbol + "' ><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
+	    	fiveListHtml.push("<li con='" + v.symbol + "' em='"+v.emoji+"' ><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
 	    })
 	    sixList.forEach(function(v, i) {
 
-	    	sixListHtml.push("<li con='" + v.symbol + "' ><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
+	    	sixListHtml.push("<li con='" + v.symbol + "' em='"+v.emoji+"' ><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
 	    })
 	    sevenList.forEach(function(v, i) {
-	    	sevenListHtml.push("<li con='" + v.symbol + "' ><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
+	    	sevenListHtml.push("<li con='" + v.symbol + "'  em='"+v.emoji+"'><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
 	    })
 	    oneListHtml.push("<li><i>&#xe684;</i></li>")
 	    twoListHtml.push("<li><i>&#xe684;</i></li>")
@@ -237,6 +238,7 @@ function sendImg(url, avatar) {
 	    //-------------------------------------------------------------------------------
 //	    点击表情到输入框
 	    $(".emBox ").on("click", "li", function() {
+	    	$("#tetxCon2").val($("#tetxCon2").val() + $(this).attr("em"))
 	    	$("#tetxCon").val($("#tetxCon").val() + $(this).attr("con"));
 	    	$(".add").css("display", "none").next().css("display", "block")
 	    })

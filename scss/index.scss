@@ -186,6 +186,7 @@ i {
                 width: 4.9rem;
                 height: auto;
                 word-wrap:break-word;
+                overflow: hidden;
                 .text,
                 .img {
                     margin-left: 0.2rem;
@@ -212,6 +213,7 @@ i {
                       box-shadow: 0 0 0.2rem transparent;
                 }
                 .audio {
+                    float: left;
                     margin-left: 0.2rem;
                     height: 0.48rem;
                     background: #FFFFFF;
@@ -226,6 +228,31 @@ i {
                         width: 0.48rem;
                         float: right;
                         transform: rotate(180deg);
+                    }
+                }
+                .dur{
+                    float: left;
+                    width: 0.7rem;
+                    height: 0.48rem;
+                    text-align: center;
+                    line-height: 0.48rem;
+                    font-size: 0.28rem;
+                    color: #333;
+                    padding: 0.1rem;
+                    position:relative;
+    
+                }
+                .dur1{
+                     &:after{
+                        display: block;
+                        content: '';
+                        position: absolute;
+                        right: 0.1rem;
+                        top: 0.1rem;
+                        width: 0.1rem;
+                        height: 0.1rem;
+                        border-radius: 50%;
+                        background: red;
                     }
                 }
             }
