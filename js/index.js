@@ -73,32 +73,23 @@ RongIMClient.setOnReceiveMessageListener({
 		console.log(message)
 		switch(message.messageType) {
 			case RongIMClient.MessageType.TextMessage:
-				console.log(message)
 				var initCon = RongIMLib.RongIMEmoji.emojiToSymbol(message.content.content);
 				var content = RongIMLib.RongIMEmoji.symbolToHTML(initCon)
 				var newHtml = '<li><div class="avatar_side"><img  class="img" src="' + avatarUrl + '" /></div><div class="msg_side"><div class="text">' + content + '</div></div></li>';
-				$(".contentBox").append(newHtml)
+				$(".contentBox").append(newHtml);
 				$(".contentBox").get(0).scrollTop = $(".contentBox").get(0).scrollHeight;
-				//发送的消息内容将会被打印
 				break;
 			case RongIMClient.MessageType.ImageMessage:
-
 				var newHtml = '<li><div class="avatar_side"><img  class="img" src="' +avatarUrl + '" /></div><div class="msg_side"><div class="img"><img class="msgImg" src="' + message.content.imageUri + '"/></div></div></li>';
-				$(".contentBox").append(newHtml)
+				$(".contentBox").append(newHtml);
 				$(".contentBox").get(0).scrollTop = $(".contentBox").get(0).scrollHeight;
-				// do something...
 				break;
 			case RongIMClient.MessageType.VoiceMessage:
 				var audioFile = message.content.content;
 				// 音频文件长度   
-				var duration = message.content.duration
-				// 预加载
-//				RongIMLib.RongIMVoice.preLoaded(audioFile, function() {
-					// 播放声音
-//					RongIMLib.RongIMVoice.play(audioFile, duration);
-//				});
+				var duration = message.content.duration;
 					var newHtml = '<li><div class="avatar_side"><img  class="img" src="' + avatarUrl + '" /></div><div class="msg_side"><div class="audio" state="true"  aud='+audioFile+' dur='+duration+' style="width:'+(1+duration*0.04)+'rem;max-width:4rem"><img src="img/audio.png" onclick="return false" /></div><div class="dur dur1">'+duration+ '”</div></div></li>';
-				$(".contentBox").append(newHtml)
+				$(".contentBox").append(newHtml);
 				$(".contentBox").get(0).scrollTop = $(".contentBox").get(0).scrollHeight;
 				break;
 			case RongIMClient.MessageType.DiscussionNotificationMessage:
@@ -130,7 +121,6 @@ RongIMClient.setOnReceiveMessageListener({
 				break;
 			case RongIMClient.MessageType.UnknownMessage:
 				// do something...
-
 				var content = RongIMLib.RongIMEmoji.symbolToHTML(message.content.content.bqmmContent)
 				var newHtml = '<li><div class="avatar_side"><img  class="img" src="' +avatarUrl + '" /></div><div class="msg_side"><div class="text">' + content + '</div></div></li>';
 				$(".contentBox").append(newHtml)
@@ -150,9 +140,9 @@ $(".contentBox").on("click",".audio",function(){
 	var self=$(this)
 	if(state){
 			RongIMLib.RongIMVoice.preLoaded(audioFile, function(){
-    // 播放声音
-    RongIMLib.RongIMVoice.play(audioFile, duration);
-});
+   			 // 播放声音
+  			  		RongIMLib.RongIMVoice.play(audioFile, duration);
+			});
 			self.next().removeClass("dur1")
 			$(this).attr("state",false)
 			setTimeout(function(){
@@ -164,18 +154,8 @@ $(".contentBox").on("click",".audio",function(){
 	}
 
 })
-//监听输入框输入
-var inputLen=0;
+//监听输入框输入***控制发送按钮的显示与否
 $("#tetxCon").on("input", function() {
-	var newInputLen=$(this).val().length;
-	if(newInputLen>inputLen){
-		console.log("add",$("#tetxCon2").val()+$(this).val().substr($(this).val().length-1))
-	$("#tetxCon2").val($("#tetxCon2").val()+$(this).val().substr($(this).val().length-1))
-	}else{
-		console.log("reduce",$("#tetxCon2").val().substr(0,$("#tetxCon2").val().length-1))
-		$("#tetxCon2").val($("#tetxCon2").val().substr(0,$("#tetxCon2").val().length-1))
-	}
-	inputLen=newInputLen
 	if($(this).val()) {
 		$(".add").css("display", "none")
 		$(".senBtn").css("display", "block")
@@ -188,44 +168,30 @@ $("#tetxCon").on("input", function() {
 //输入框获取焦点时,表情和上传图片隐藏
 $("#tetxCon").on("focus", function() {
 	$("#sendMessageWrap").height("1.1rem");
-	$("#contentBox").height(document.documentElement.clientHeight - $("#sendMessageWrap").height())
+	$("#contentBox").height(document.documentElement.clientHeight - $("#sendMessageWrap").height());
 	$("#emoticonAll").css("display", "none");
-	$("#upBox").css("display", "none")
+	$("#upBox").css("display", "none");
 })
-//点击表情中删除
+//点击表情中删除（文本）
 $(".emBox").on("click", "i", function() {
-	var value = $("#tetxCon").val()
-//	var last = value.lastIndexOf(']')
-//	var first = value.lastIndexOf("[")
-//	console.log(last, first)
-//	if(last == value.length - 1 && first > -1) {
-//		var val = value.substr(0, first)
-//	}else{
-		var val=value.substr(0,value.length-1)
-//	}
-//	console.log(value)
-//	console.log(val)
-	$("#tetxCon").val(val)
+	$("#tetxCon").val($("#tetxCon").val().substr(0,value.length-1));
 })
 //-------------------------------------------------------------------------------
-//	    点击表情发送
+//点击表情直接发送（走文本）
 $(".emBox ").on("click", "li", function() {
 	if($(this).attr("con")){
-	sendText( $(this).attr("em"),$(this).attr("con"))
+	sendText( $(this).attr("em"),$(this).attr("con"));
 	}
 })
-//点击发送(文本与表情)
+//点击发送(文本)
 $(".senBtn").on("click", function() {
-	sendText($("#tetxCon2").val(),$("#tetxCon").val())
+	sendText($("#tetxCon").val(),$("#tetxCon").val());
 	$("#tetxCon").val("");
-	$("#tetxCon2").val("");
-	$(".add").css("display", "block")
-	$(".senBtn").css("display", "none")
-	$(".contentBox").get(0).scrollTop = $(".contentBox").get(0).scrollHeight;
+	$(".add").css("display", "block");
+	$(".senBtn").css("display", "none");
 })
 //发送文本消息
 function sendText(addMsg,msg) {
-	console.log(addMsg,msg)
 	//-------------------------------------
 	// 定义消息类型,文字消息使用 RongIMLib.TextMessage
 	//或者使用RongIMLib.TextMessage.obtain 方法.具体使用请参见文档
@@ -242,11 +208,9 @@ function sendText(addMsg,msg) {
 		onSuccess: function(message) {
 			var content = RongIMLib.RongIMEmoji.symbolToHTML(msg)
 			//message 为发送的消息对象并且包含服务器返回的消息唯一Id和发送消息时间戳
-
 			var newHtml = '<li><div class="avatar_side avatar_self"><img  class="img" src="' +avatarUrl+ '" /></div><div class="msg_side msg_self"><div class="text">' + content + '</div></div></li>';
 			$(".contentBox").append(newHtml).get(0).scrollTop = $(".contentBox").get(0).scrollHeight;
 			console.log("Send successfully");
-
 		},
 		onError: function(errorCode, message) {
 			var info = '';
@@ -281,18 +245,17 @@ function sendText(addMsg,msg) {
 function getIMTime(nS) {
 	return new Date(parseInt(nS)).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
 }
-
+//获取历史记录
 function kk() {
-	//              var that = this;
+	//  var that = this;
 	var conversationType = RongIMLib.ConversationType.PRIVATE //私聊,其他会话选择相应的消息类型即可。
 	var timestrap = 0; // 默认传 null，若从头开始获取历史消息，请赋值为 0 ,timestrap = 0;
-	var count = 5; // 每次获取的历史消息条数，范围 0-20 条，可以多次获取。
+	var count = 10; // 每次获取的历史消息条数，范围 0-20 条，可以多次获取。
 	RongIMLib.RongIMClient.getInstance().getHistoryMessages(conversationType, targetId, timestrap, count, {
 		onSuccess: function(list, hasMsg) {
 			// list => Message 数组。
 			// hasMsg => 是否还有历史消息可以获取。
 			console.log(list, hasMsg)
-
 			//			if(hasMsg) {
 			var historyHtml = []
 			var avatar = 'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1476692208,2742622493&fm=5';
@@ -303,21 +266,17 @@ function kk() {
 						targetName = list[i].content.extra.name;
 					if(list[i].senderUserId != targetId) {
 						var newHtml = '<li><div class="avatar_side avatar_self"><img  class="img" onclick="return false" src="' + avatarUrl+ '" /></div><div class="msg_side msg_self"><div class="text">' + content + '</div></div></li>';
-
 						historyHtml.push(newHtml)
 					} else {
 						var newHtml = '<li><div class="avatar_side "><img  class="img" src="' + avatarUrl + '" /></div><div class="msg_side "><div class="text">' + content + '</div></div></li>';
-
 						historyHtml.push(newHtml)
 					}
 				} else if(list[i].messageType == "ImageMessage") {
 					if(list[i].senderUserId != targetId) {
 						var newHtml = '<li><div class="avatar_side avatar_self"><img  class="img" src="' + avatarUrl + '" /></div><div class="msg_side msg_self"><div class="img"><img class="msgImg" src="' + list[i].content.imageUri + '"/></div></div></li>';
-
 						historyHtml.push(newHtml)
 					} else {
 						var newHtml = '<li><div class="avatar_side "><img  class="img" src="' + avatarUrl + '" /></div><div class="msg_side "><div class="img"><img class="msgImg" src="' + list[i].content.imageUri + '"/></div></div></li>';
-
 						historyHtml.push(newHtml)
 					}
 				}
@@ -331,14 +290,15 @@ function kk() {
 		}
 	});
 }
+//延迟一秒获取历史记录
 setTimeout(function() {
 	kk()
 }, 1000)
-//图片预览
+//点击图片预览
 $(".contentBox").on("click", ".msgImg", function() {
-	var src = $(this).attr("src")
-	$(".viewImg").css("display", "block").find("img").attr("src", src)
+	$(".viewImg").css("display", "block").find("img").attr("src", $(this).attr("src"))
 })
+//关闭图片预览
 $(".viewImg").on("click", function() {
 	$(this).css("display","none")
 })
