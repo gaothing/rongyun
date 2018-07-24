@@ -57,7 +57,6 @@
 			fiveListHtml.push("<li con='" + v.symbol + "' em='" + v.emoji + "' ><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
 		})
 		sixList.forEach(function(v, i) {
-
 			sixListHtml.push("<li con='" + v.symbol + "' em='" + v.emoji + "' ><div style='background-image:" + v.node.style.backgroundImage + ";background-size:" + v.node.style.backgroundSize + ";background-position:" + v.node.style.backgroundPosition + "'  ></div></li>");
 		})
 		sevenList.forEach(function(v, i) {
@@ -185,7 +184,7 @@
 				if(this.status == 200) {
 					//得到一个blob对象
 					var blob = this.response;
-					console.log("blob", blob)
+//					console.log("blob", blob)
 					// 至关重要
 					let oFileReader = new FileReader();
 					oFileReader.onloadend = function(e) {
@@ -199,10 +198,6 @@
 					img.onload = function(e) {
 						window.URL.revokeObjectURL(img.src); // 清除释放
 					};
-					let src = window.URL.createObjectURL(blob);
-					img.src = src
-					document.getElementById("container1").appendChild(img);
-					//====为了在页面显示图片，可以删除====
 				}
 			}
 			xhr.send();

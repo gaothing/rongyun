@@ -3,7 +3,7 @@ var token = "zdy69RIJfKYG2wJ82B+13QXGQhGIJiX4RCueQq8ljG0EPoX0pZUXnGIZ1MLDWSZ8uNY
 var targetId = "1";
 //设置一个静态头像
 var avatarUrl="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532342327029&di=b476dd61ffacd37856220a50b4294325&imgtype=0&src=http%3A%2F%2Fs7.sinaimg.cn%2Fmw690%2F006DJjX1zy7aD96xYY676%26690"
-RongIMLib.RongIMVoice.init();
+
 //---------------------------
 RongIMClient.connect(token, {
 	onSuccess: function(userId) {
@@ -139,9 +139,10 @@ $(".contentBox").on("click",".audio",function(){
 	var state=$(this).attr("state");
 	var self=$(this)
 	if(state){
+		RongIMLib.RongIMVoice.init();
 			RongIMLib.RongIMVoice.preLoaded(audioFile, function(){
    			 // 播放声音
-  			  		RongIMLib.RongIMVoice.play(audioFile, duration);
+  			  		RongIMLib.RongIMVoice.play(audioFile,  audioFile.length / 1024);
 			});
 			self.next().removeClass("dur1")
 			$(this).attr("state",false)
