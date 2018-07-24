@@ -228,7 +228,7 @@
 			RongIMClient.getInstance().sendMessage(conversationtype, targetId, msg, {
 				onSuccess: function(message) {
 					//message 为发送的消息对象并且包含服务器返回的消息唯一Id和发送消息时间戳
-					var newHtml = '<li><div class="avatar_side avatar_self"><img  class="img" src="' + avatarUrl + '" /></div><div class="msg_side msg_self"><div class="img"><img src="' + url + '"/></div></div></li>';
+					var newHtml = '<li><div class="avatar_side avatar_self"><img  class="img" src="' + avatarUrl + '" /></div><div class="msg_side msg_self"><div class="img"><img class="msgImg" src ="' + url + '"/></div></div></li>';
 					$(".contentBox").append(newHtml).get(0).scrollTop = $(".contentBox").get(0).scrollHeight;
 					console.log("Send successfully");
 				},
